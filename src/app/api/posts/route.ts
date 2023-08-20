@@ -7,7 +7,9 @@ export async function GET() {
   const res = {
     status: "success",
     results: posts.length,
-    posts,
+    data: {
+      posts,
+    },
   };
   return NextResponse.json(res, { status: 200 });
 }
