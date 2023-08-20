@@ -19,15 +19,15 @@ type IdParam = {
   };
 };
 
+const invalidIdResponse = NextResponse.json(
+  invalidRequestBody("invalid id"),
+  invalidRequestStatus
+);
+
 export const GET = async (_req: Request, context: IdParam) => {
   try {
     const id = parseInt(context.params.id);
-    if (isNaN(id)) {
-      return NextResponse.json(
-        invalidRequestBody("invalid id"),
-        invalidRequestStatus
-      );
-    }
+    if (isNaN(id)) return invalidIdResponse;
     const post = await prisma.post.findUnique({
       where: {
         id,
@@ -44,12 +44,7 @@ export const GET = async (_req: Request, context: IdParam) => {
 export const PUT = async (req: Request, context: IdParam) => {
   try {
     const id = parseInt(context.params.id);
-    if (isNaN(id)) {
-      return NextResponse.json(
-        invalidRequestBody("invalid id"),
-        invalidRequestStatus
-      );
-    }
+    if (isNaN(id)) return invalidIdResponse;
     const data: Prisma.PostUpdateInput = await req.json();
     const updatePost = await prisma.post.update({
       where: {
@@ -62,13 +57,31 @@ export const PUT = async (req: Request, context: IdParam) => {
     });
     return NextResponse.json(successBody(updatePost), successStatus);
   } catch (error: any) {
-    if (error instanceof Prisma.PrismaClientKnownRequestError) {
-      if (error.code === "P2025") {
-        return NextResponse.json(notFoundBody, notFoundStatus);
-      }
+    if (
+      error instanceof Prisma.PrismaClientKnownRequestError &&
+      error.code === "P2025"
+    ) {
+      return NextResponse.json(notFoundBody, notFoundStatus);
     }
     return NextResponse.json(serverErrorBody(error), serverErrorStatus);
   }
 };
 
-export const DELETE = async (req: Request, context: IdParam) => {};
+export const DELETE = async (_req: Request, context: IdParam) => {
+  try {
+    const id = parseInt(context.params.id);
+    if (isNaN(id)) return invalidIdResponse;
+    const deletePost = await prisma.post.delete({
+      where: { id },
+    });
+    return NextResponse.json(successBody(deletePost), successStatus);
+  } catch (error: any) {
+    if (
+      error instanceof Prisma.PrismaClientKnownRequestError &&
+      error.code === "P2025"
+    ) {
+      return NextResponse.json(notFoundBody, notFoundStatus);
+    }
+    return NextResponse.json(serverErrorBody(error), serverErrorStatus);
+  }
+};
