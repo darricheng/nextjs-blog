@@ -1,6 +1,17 @@
 import { NextResponse } from "next/server";
 import { Prisma } from "@prisma/client";
+
 import { prisma } from "@/src/lib/prisma";
+import {
+  invalidRequestBody,
+  invalidRequestStatus,
+  notFoundBody,
+  notFoundStatus,
+  serverErrorBody,
+  serverErrorStatus,
+  successBody,
+  successStatus,
+} from "@/src/lib/apiResponses";
 
 type IdParam = {
   params: {
@@ -8,39 +19,38 @@ type IdParam = {
   };
 };
 
-const invalidIdBody = { status: "error", message: "Invalid ID" };
-const invalidIdStatus = { status: 400 };
-const notFoundBody = { status: "error", message: "Post not found" };
-const notFoundStatus = { status: 404 };
-
 export const GET = async (_req: Request, context: IdParam) => {
-  const id = parseInt(context.params.id);
-  if (isNaN(id)) {
-    return NextResponse.json(invalidIdBody, invalidIdStatus);
-  }
-  const post = await prisma.post.findUnique({
-    where: {
-      id,
-    },
-  });
-  if (!post) return NextResponse.json(notFoundBody, notFoundStatus);
+  try {
+    const id = parseInt(context.params.id);
+    if (isNaN(id)) {
+      return NextResponse.json(
+        invalidRequestBody("invalid id"),
+        invalidRequestStatus
+      );
+    }
+    const post = await prisma.post.findUnique({
+      where: {
+        id,
+      },
+    });
+    if (!post) return NextResponse.json(notFoundBody, notFoundStatus);
 
-  const res = {
-    status: "success",
-    data: {
-      post,
-    },
-  };
-  return NextResponse.json(res, { status: 200 });
+    return NextResponse.json(successBody(post), successStatus);
+  } catch (error: any) {
+    return NextResponse.json(serverErrorBody(error), serverErrorStatus);
+  }
 };
 
 export const PUT = async (req: Request, context: IdParam) => {
   try {
     const id = parseInt(context.params.id);
     if (isNaN(id)) {
-      return NextResponse.json(invalidIdBody, invalidIdStatus);
+      return NextResponse.json(
+        invalidRequestBody("invalid id"),
+        invalidRequestStatus
+      );
     }
-    const data = await req.json();
+    const data: Prisma.PostUpdateInput = await req.json();
     const updatePost = await prisma.post.update({
       where: {
         id,
@@ -50,19 +60,14 @@ export const PUT = async (req: Request, context: IdParam) => {
         content: data.content,
       },
     });
-    const res = { status: "success", data: { updatePost } };
-    return NextResponse.json(res, { status: 200 });
+    return NextResponse.json(successBody(updatePost), successStatus);
   } catch (error: any) {
     if (error instanceof Prisma.PrismaClientKnownRequestError) {
       if (error.code === "P2025") {
         return NextResponse.json(notFoundBody, notFoundStatus);
       }
     }
-    const errRes = {
-      status: "error",
-      message: error.message,
-    };
-    return NextResponse.json(errRes, { status: 500 });
+    return NextResponse.json(serverErrorBody(error), serverErrorStatus);
   }
 };
 
