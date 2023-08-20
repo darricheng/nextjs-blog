@@ -1,7 +1,7 @@
 import { NextResponse } from "next/server";
 import { Prisma } from "@prisma/client";
 
-import { prisma } from "@/src/lib/prisma";
+import { prisma } from "@/src/lib/utils/prisma";
 import {
   invalidRequestBody,
   invalidRequestStatus,
@@ -11,7 +11,7 @@ import {
   serverErrorStatus,
   successBody,
   successStatus,
-} from "@/src/lib/apiResponses";
+} from "@/src/lib/utils/apiResponses";
 
 type IdParam = {
   params: {
