@@ -1,4 +1,4 @@
-import { fetchPost } from "@/src/lib/utils/dataServices";
+import { fetchPost } from "@/src/lib/utils/serverDataServices";
 
 type PostProps = {
   params: {
