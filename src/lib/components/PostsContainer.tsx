@@ -8,6 +8,10 @@ import {
   CardFooter,
 } from "@nextui-org/react";
 import Link from "next/link";
+import { useTransition } from "react";
+
+import { deletePost } from "@/src/lib/utils/clientDataServices";
+import { useRouter } from "next/navigation";
 
 type Post = {
   id: number;
@@ -19,27 +23,42 @@ type Post = {
 
 const editHandler = (id: number) => {};
 
-const deleteHandler = (id: number) => {};
+export default function PostsContainer({ postsData }: { postsData: Post[] }) {
+  const router = useRouter();
+  const [isPending, startTransition] = useTransition();
 
-const renderPosts = (data: Post[]) => {
-  return data.map((post) => {
-    const shortContent = post.content.substring(0, 100).trim() + "...";
-    return (
-      <Link href={`/blog/${post.id}`} key={post.id}>
+  const deleteHandler = async (id: number) => {
+    const res = await deletePost(id);
+    if (res.status === 200) {
+      startTransition(() => {
+        router.refresh();
+      });
+    }
+  };
+
+  const renderPosts = (data: Post[]) => {
+    return data.map((post) => {
+      const shortContent = post.content.substring(0, 100).trim() + "...";
+      return (
         <Card key={post.id}>
           <CardHeader title={post.title}>{post.title}</CardHeader>
           <CardBody>{shortContent}</CardBody>
           <CardFooter>
+            <Link href={`/blog/${post.id}`} key={post.id}>
+              <Button>Read more</Button>
+            </Link>
             <Button onPress={() => editHandler(post.id)}>Edit</Button>
             <Button onPress={() => deleteHandler(post.id)}>Delete</Button>
           </CardFooter>
         </Card>
-      </Link>
-    );
-  });
-};
+      );
+    });
+  };
 
-export default function PostsContainer({ postsData }: { postsData: Post[] }) {
   const posts = renderPosts(postsData);
-  return <div className="">{posts}</div>;
+  return (
+    <div className="" style={{ opacity: isPending ? 0.7 : 1 }}>
+      {posts}
+    </div>
+  );
 }
