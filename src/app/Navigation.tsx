@@ -12,6 +12,9 @@ export default function Navigation() {
         <NavbarItem>
           <Link href="/blog">Blog</Link>
         </NavbarItem>
+        <NavbarItem>
+          <Link href="/blog/add">Add</Link>
+        </NavbarItem>
       </NavbarContent>
     </Navbar>
   );
