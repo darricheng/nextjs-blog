@@ -10,9 +10,9 @@ export default async function Post({ params }: PostProps) {
   const postData = await fetchPost(params.id);
   console.log("Post component", postData);
   return (
-    <div>
+    <article className="prose lg:prose-xl">
       <h1>{postData.title}</h1>
       <p>{postData.content}</p>
-    </div>
+    </article>
   );
 }

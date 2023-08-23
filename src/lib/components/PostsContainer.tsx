@@ -44,13 +44,18 @@ export default function PostsContainer({ postsData }: { postsData: Post[] }) {
       const shortContent = post.content.substring(0, 100).trim() + "...";
       return (
         <Card key={post.id}>
-          <CardHeader title={post.title}>{post.title}</CardHeader>
-          <CardBody>{shortContent}</CardBody>
+          <CardHeader title={post.title}>
+            <h2>{post.title}</h2>
+          </CardHeader>
+          <CardBody>
+            <p>{shortContent}</p>
+          </CardBody>
           <CardFooter>
             <Link href={`/blog/${post.id}`} key={post.id}>
               <Button>Read more</Button>
             </Link>
             <Button onPress={() => editHandler(post.id)}>Edit</Button>
+            {/* TODO: Add a confirmation modal before deleting */}
             <Button onPress={() => deleteHandler(post.id)}>Delete</Button>
           </CardFooter>
         </Card>
@@ -60,7 +65,10 @@ export default function PostsContainer({ postsData }: { postsData: Post[] }) {
 
   const posts = renderPosts(postsData);
   return (
-    <div className="" style={{ opacity: isPending || isDeleting ? 0.7 : 1 }}>
+    <div
+      className="flex flex-row flex-wrap"
+      style={{ opacity: isPending || isDeleting ? 0.7 : 1 }}
+    >
       {posts}
     </div>
   );
