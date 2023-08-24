@@ -8,7 +8,6 @@ type PostProps = {
 
 export default async function Post({ params }: PostProps) {
   const postData = await fetchPost(params.id);
-  console.log("Post component", postData);
   return (
     <article>
       <h1>{postData.title}</h1>
