@@ -4,7 +4,7 @@ import { Navbar, NavbarContent, NavbarItem, Link } from "@nextui-org/react";
 
 export default function Navigation() {
   return (
-    <Navbar>
+    <Navbar className="mb-8">
       <NavbarContent>
         <NavbarItem>
           <Link href="/">Home</Link>

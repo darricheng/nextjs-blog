@@ -43,16 +43,16 @@ export default function PostsContainer({ postsData }: { postsData: Post[] }) {
     return data.map((post) => {
       const shortContent = post.content.substring(0, 100).trim() + "...";
       return (
-        <Card key={post.id}>
+        <Card key={post.id} className="w-72 h-72">
           <CardHeader title={post.title}>
-            <h2>{post.title}</h2>
+            <h2 className="m-auto">{post.title}</h2>
           </CardHeader>
           <CardBody>
-            <p>{shortContent}</p>
+            <p className="m-auto">{shortContent}</p>
           </CardBody>
-          <CardFooter>
+          <CardFooter className="place-content-between">
             <Link href={`/blog/${post.id}`} key={post.id}>
-              <Button>Read more</Button>
+              <Button>Read</Button>
             </Link>
             <Button onPress={() => editHandler(post.id)}>Edit</Button>
             {/* TODO: Add a confirmation modal before deleting */}
@@ -66,7 +66,7 @@ export default function PostsContainer({ postsData }: { postsData: Post[] }) {
   const posts = renderPosts(postsData);
   return (
     <div
-      className="flex flex-row flex-wrap"
+      className="flex flex-row flex-wrap place-content-between gap-y-16"
       style={{ opacity: isPending || isDeleting ? 0.7 : 1 }}
     >
       {posts}
