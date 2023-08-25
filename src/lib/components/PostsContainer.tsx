@@ -43,14 +43,14 @@ export default function PostsContainer({ postsData }: { postsData: Post[] }) {
     return data.map((post) => {
       const shortContent = post.content.substring(0, 100).trim() + "...";
       return (
-        <Card key={post.id} className="w-72 h-72">
+        <Card key={post.id} className="sm:w-80 w-full h-72">
           <CardHeader title={post.title}>
             <h2 className="m-auto">{post.title}</h2>
           </CardHeader>
           <CardBody>
             <p className="m-auto">{shortContent}</p>
           </CardBody>
-          <CardFooter className="place-content-between">
+          <CardFooter className="place-content-around">
             <Link href={`/blog/${post.id}`} key={post.id}>
               <Button>Read</Button>
             </Link>
@@ -66,7 +66,7 @@ export default function PostsContainer({ postsData }: { postsData: Post[] }) {
   const posts = renderPosts(postsData);
   return (
     <div
-      className="flex flex-row flex-wrap place-content-between gap-y-16"
+      className="flex flex-row flex-wrap place-content-around gap-y-16 gap-x-4"
       style={{ opacity: isPending || isDeleting ? 0.7 : 1 }}
     >
       {posts}

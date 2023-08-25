@@ -17,8 +17,13 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="en" className="dark">
-      <body className={inter.className + " prose dark:prose-invert m-auto"}>
+    <html lang="en" className="dark text-foreground bg-background">
+      <body
+        className={
+          inter.className +
+          " m-auto prose dark:prose-invert min-h-screen min-w-full bg-black sm:px-40 px-8"
+        }
+      >
         <Providers>
           <Navigation />
           {children}
