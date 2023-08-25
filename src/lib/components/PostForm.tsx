@@ -18,7 +18,7 @@ export default function PostForm({
   const [isAdding, setIsAdding] = useState(false);
   const [isPending, startTransition] = useTransition();
 
-  const submit = async () => {
+  const submitForm = async () => {
     const title = titleRef.current?.value;
     let content = contentRef.current?.value;
     if (!title) {
@@ -40,7 +40,10 @@ export default function PostForm({
       });
     }
   };
+  const cancel = () => router.replace("/blog");
+
   const isLoading = isAdding || isPending;
+
   return (
     <form
       className="flex flex-col w-full flex-wrap md:flex-nowrap gap-4"
@@ -62,9 +65,12 @@ export default function PostForm({
         defaultValue={data.content}
         minRows={8}
       />
-      <Button color="primary" onClick={submit} isLoading={isLoading}>
-        Submit
-      </Button>
+      <div className="flex gap-4">
+        <Button onClick={cancel}>Cancel</Button>
+        <Button color="primary" onClick={submitForm} isLoading={isLoading}>
+          Submit
+        </Button>
+      </div>
     </form>
   );
 }
