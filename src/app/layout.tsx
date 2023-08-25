@@ -21,7 +21,7 @@ export default function RootLayout({
       <body
         className={
           inter.className +
-          " m-auto prose dark:prose-invert min-h-screen min-w-full bg-black sm:px-40 px-8"
+          " m-auto prose dark:prose-invert min-h-screen min-w-full bg-black sm:px-40 px-8 pb-8"
         }
       >
         <Providers>
