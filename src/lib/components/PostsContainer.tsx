@@ -39,6 +39,8 @@ export default function PostsContainer({ postsData }: { postsData: Post[] }) {
     }
   };
 
+  const isLoading = isPending || isDeleting;
+
   const renderPosts = (data: Post[]) => {
     return data.map((post) => {
       const shortContent = post.content.substring(0, 100).trim() + "...";
@@ -52,11 +54,17 @@ export default function PostsContainer({ postsData }: { postsData: Post[] }) {
           </CardBody>
           <CardFooter className="place-content-around">
             <Link href={`/blog/${post.id}`} key={post.id}>
-              <Button>Read</Button>
+              <Button color="primary">Read</Button>
             </Link>
             <Button onPress={() => editHandler(post.id)}>Edit</Button>
             {/* TODO: Add a confirmation modal before deleting */}
-            <Button onPress={() => deleteHandler(post.id)}>Delete</Button>
+            <Button
+              onPress={() => deleteHandler(post.id)}
+              color="danger"
+              isLoading={isLoading}
+            >
+              Delete
+            </Button>
           </CardFooter>
         </Card>
       );
@@ -67,7 +75,7 @@ export default function PostsContainer({ postsData }: { postsData: Post[] }) {
   return (
     <div
       className="flex flex-row flex-wrap place-content-around gap-y-16 gap-x-4"
-      style={{ opacity: isPending || isDeleting ? 0.7 : 1 }}
+      style={{ opacity: isLoading ? 0.7 : 1 }}
     >
       {posts}
     </div>
