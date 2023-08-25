@@ -3,7 +3,7 @@ import { useRouter } from "next/navigation";
 import { useRef, useState, useTransition } from "react";
 
 interface PostFormProps {
-  data: {
+  data?: {
     title: string;
     content: string;
   };
@@ -13,7 +13,10 @@ interface PostFormProps {
   }) => Promise<Response>;
 }
 
-export default function PostForm({ submitHandler, data }: PostFormProps) {
+export default function PostForm({
+  submitHandler,
+  data = { title: "", content: "" },
+}: PostFormProps) {
   const titleRef = useRef<HTMLInputElement>(null);
   const contentRef = useRef<HTMLInputElement>(null);
   const router = useRouter();
@@ -42,10 +45,11 @@ export default function PostForm({ submitHandler, data }: PostFormProps) {
       });
     }
   };
+  const isLoading = isAdding || isPending;
   return (
     <form
-      className="flex w-full flex-wrap md:flex-nowrap gap-4"
-      style={{ opacity: isAdding || isPending ? 0.7 : 1 }}
+      className="flex flex-col w-full flex-wrap md:flex-nowrap gap-4"
+      style={{ opacity: isLoading ? 0.7 : 1 }}
     >
       <Input
         ref={titleRef}
@@ -53,15 +57,17 @@ export default function PostForm({ submitHandler, data }: PostFormProps) {
         label="Title"
         labelPlacement="outside"
         placeholder="Enter post title here"
+        defaultValue={data.title}
       />
       <Textarea
         ref={contentRef}
         label="Content"
         labelPlacement="outside"
         placeholder="Enter content here"
-        className=""
+        defaultValue={data.content}
+        minRows={8}
       />
-      <Button color="primary" onClick={submit}>
+      <Button color="primary" onClick={submit} isLoading={isLoading}>
         Submit
       </Button>
     </form>
