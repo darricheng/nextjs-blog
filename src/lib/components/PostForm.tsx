@@ -1,16 +1,11 @@
 import { Button, Input, Textarea } from "@nextui-org/react";
 import { useRouter } from "next/navigation";
 import { useRef, useState, useTransition } from "react";
+import type { Post } from "../types";
 
 interface PostFormProps {
-  data?: {
-    title: string;
-    content: string;
-  };
-  submitHandler: (post: {
-    title: string;
-    content: string;
-  }) => Promise<Response>;
+  data?: Post;
+  submitHandler: (post: Post) => Promise<Response>;
 }
 
 export default function PostForm({

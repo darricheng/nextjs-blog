@@ -1,9 +1,5 @@
 const baseUrl = process.env.NEXT_PUBLIC_BASE_URL;
-
-type Post = {
-  title: string;
-  content: string | null;
-};
+import type { Post } from "../types";
 
 export const addPost = async (data: Post) => {
   return await fetch(`${baseUrl}/api/posts`, {
