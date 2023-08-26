@@ -1,7 +1,7 @@
 const baseUrl = process.env.BASE_URL;
 
 export const fetchAllPosts = async () => {
-  const res = await fetch(`${baseUrl}/api/posts`);
+  const res = await fetch(`${baseUrl}/api/posts`, { cache: "no-store" });
   const json = await res.json();
   return json.data;
 };
