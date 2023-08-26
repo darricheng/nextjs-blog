@@ -23,7 +23,7 @@ type Post = {
 
 export default function PostsContainer({ postsData }: { postsData: Post[] }) {
   const router = useRouter();
-  const [isDeleting, setIsDeleting] = useState(false);
+  const [isDeleting, setIsDeleting] = useState<[boolean, number]>([false, -1]);
   const [isPending, startTransition] = useTransition();
 
   const editHandler = (id: number) => {
@@ -31,9 +31,9 @@ export default function PostsContainer({ postsData }: { postsData: Post[] }) {
   };
 
   const deleteHandler = async (id: number) => {
-    setIsDeleting(true);
+    setIsDeleting([true, id]);
     const res = await deletePost(id);
-    setIsDeleting(false);
+    setIsDeleting([false, -1]);
     if (res.status === 200) {
       startTransition(() => {
         router.refresh();
@@ -41,7 +41,7 @@ export default function PostsContainer({ postsData }: { postsData: Post[] }) {
     }
   };
 
-  const isLoading = isPending || isDeleting;
+  const isLoading = isPending || isDeleting[0];
 
   const renderPosts = (data: Post[]) => {
     return data.map((post) => {
@@ -63,7 +63,7 @@ export default function PostsContainer({ postsData }: { postsData: Post[] }) {
             <Button
               onPress={() => deleteHandler(post.id)}
               color="danger"
-              isLoading={isLoading}
+              isLoading={isDeleting[0] && isDeleting[1] === post.id}
             >
               Delete
             </Button>
