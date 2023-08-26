@@ -21,12 +21,14 @@ type Post = {
   lastModifiedAt: string;
 };
 
-const editHandler = (id: number) => {};
-
 export default function PostsContainer({ postsData }: { postsData: Post[] }) {
   const router = useRouter();
   const [isDeleting, setIsDeleting] = useState(false);
   const [isPending, startTransition] = useTransition();
+
+  const editHandler = (id: number) => {
+    router.replace(`/blog/${id}/edit`);
+  };
 
   const deleteHandler = async (id: number) => {
     setIsDeleting(true);

@@ -1,22 +1,25 @@
 import { Button, Input, Textarea } from "@nextui-org/react";
 import { useRouter } from "next/navigation";
-import { useRef, useState, useTransition } from "react";
+import { useRef, useState } from "react";
 import type { Post } from "../types";
 
 interface PostFormProps {
   data?: Post;
+  routeHandler: (json: any) => void;
   submitHandler: (post: Post) => Promise<Response>;
+  isPending: boolean;
 }
 
 export default function PostForm({
   submitHandler,
+  routeHandler,
   data = { title: "", content: "" },
+  isPending,
 }: PostFormProps) {
   const titleRef = useRef<HTMLInputElement>(null);
   const contentRef = useRef<HTMLInputElement>(null);
   const router = useRouter();
   const [isAdding, setIsAdding] = useState(false);
-  const [isPending, startTransition] = useTransition();
 
   const submitForm = async () => {
     const title = titleRef.current?.value;
@@ -31,14 +34,8 @@ export default function PostForm({
     const post = { title, content };
     setIsAdding(true);
     const res = await submitHandler(post);
-    const json = await res.json();
     setIsAdding(false);
-    const newPostId = json.data.id;
-    if (res.status === 201) {
-      startTransition(() => {
-        router.replace(`/blog/${newPostId}`);
-      });
-    }
+    routeHandler(res);
   };
   const cancel = () => router.replace("/blog");
 
