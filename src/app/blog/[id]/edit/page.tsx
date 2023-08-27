@@ -19,12 +19,12 @@ export default function EditPost() {
   };
 
   const routeHandler = async (data: any) => {
-    const json = await data.json();
     if (data.status === 200) {
       startTransition(() => {
         router.replace(`/blog/${id}`);
       });
     }
+    // TODO: inform user that edit failed
   };
 
   useEffect(() => {
@@ -33,7 +33,7 @@ export default function EditPost() {
     const getPost = async () => {
       try {
         const postData = await fetchPost(id);
-        if (!ignore) setPost(postData);
+        if (!ignore && postData) setPost(postData);
       } catch (e) {
         console.error(e);
       }

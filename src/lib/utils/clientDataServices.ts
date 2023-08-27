@@ -23,7 +23,12 @@ export const editPost = async (id: number, post: Post) => {
 };
 
 export const fetchPost = async (id: number) => {
-  const res = await fetch(`${baseUrl}/api/posts/${id}`);
-  const json = await res.json();
-  return json.data;
+  try {
+    const res = await fetch(`${baseUrl}/api/posts/${id}`);
+    const json = await res.json();
+    return json.data;
+  } catch (error) {
+    console.error(error);
+    return null;
+  }
 };
