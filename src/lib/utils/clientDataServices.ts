@@ -1,4 +1,6 @@
-const baseUrl = process.env.NEXT_PUBLIC_VERCEL_URL;
+const protocol =
+  process.env.NEXT_PUBLIC_VERCEL_ENV !== "development" ? "https:" : "http:";
+const baseUrl = `${protocol}//${process.env.NEXT_PUBLIC_VERCEL_URL}`;
 
 import type { Post } from "../types";
 

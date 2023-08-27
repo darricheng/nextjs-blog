@@ -1,4 +1,5 @@
-const baseUrl = process.env.VERCEL_URL;
+const protocol = process.env.VERCEL_ENV !== "development" ? "https:" : "http:";
+const baseUrl = `${protocol}//${process.env.VERCEL_URL}`;
 
 export const fetchAllPosts = async () => {
   const res = await fetch(`${baseUrl}/api/posts`, { cache: "no-store" });
