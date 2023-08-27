@@ -13,7 +13,14 @@ export const fetchAllPosts = async () => {
 };
 
 export const fetchPost = async (id: number) => {
-  const res = await fetch(`${baseUrl}/api/posts/${id}`);
-  const json = await res.json();
-  return json.data;
+  try {
+    const res = await fetch(`${baseUrl}/api/posts/${id}`, {
+      cache: "no-store",
+    });
+    const json = await res.json();
+    return json.data;
+  } catch (error) {
+    console.error(error);
+    return { title: "", content: "" };
+  }
 };
