@@ -14,6 +14,6 @@ I use pnpm as my package manager, so [install it](https://pnpm.io/installation) 
 
 ## Deploying the app to Vercel
 
-1. Follow the [instructions on Vercel](https://nextjs.org/learn/basics/deploying-nextjs-app) for deploying your NextJS app with Vercel.
-2. Follow the instructions for a setting up a Postgres database with Vercel, or set up one with your provider of choice.
+1. Follow the [instructions](https://vercel.com/docs/storage/vercel-postgres/quickstart) for a setting up a Postgres database with Vercel.
+2. Follow the [instructions on Vercel](https://nextjs.org/learn/basics/deploying-nextjs-app) for deploying your NextJS app with Vercel.
 3. Change the environment variables for the blog app so that it can read and write data from and to the database.
