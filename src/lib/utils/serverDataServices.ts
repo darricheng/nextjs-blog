@@ -2,8 +2,13 @@ const protocol = process.env.VERCEL_ENV !== "development" ? "https:" : "http:";
 const baseUrl = `${protocol}//${process.env.VERCEL_URL}`;
 
 export const fetchAllPosts = async () => {
-  const res = await fetch(`${baseUrl}/api/posts`, { cache: "no-store" });
+  console.log("fetching all posts");
+  const url = `${baseUrl}/api/posts`;
+  console.log("url", url);
+  const res = await fetch(url, { cache: "no-store" });
+  console.log("res", res);
   const json = await res.json();
+  console.log("json", json);
   return json.data;
 };
 
