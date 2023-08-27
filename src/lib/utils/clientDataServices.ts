@@ -1,4 +1,5 @@
-const baseUrl = process.env.NEXT_PUBLIC_BASE_URL;
+const baseUrl = process.env.NEXT_PUBLIC_VERCEL_URL;
+
 import type { Post } from "../types";
 
 export const addPost = async (data: Post) => {
