@@ -43,7 +43,7 @@ export default function PostsContainer({ postsData }: { postsData: Post[] }) {
 
   const isLoading = isPending || isDeleting[0];
 
-  const renderPosts = (data: Post[]) => {
+  const renderPosts = (data: Post[] = []) => {
     return data.map((post) => {
       const shortContent = post.content.substring(0, 100).trim() + "...";
       return (
