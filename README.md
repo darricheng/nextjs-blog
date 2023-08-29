@@ -7,7 +7,7 @@ This is a sample blog project for me to explore and better understand some of th
 I use pnpm as my package manager, so [install it](https://pnpm.io/installation) first if you don't have it.
 
 1. Install all the dependencies for the project using `pnpm install`.
-2. Create a `.env.local` file, then copy the `.env.sample` file contents over to `.env.local`. The `BASE_URL`s should point to the locally running instance of the app (which should be `localhost:3000`), and the `DATABASE_URL` to your local instance of Postgres.
+2. Create a `.env.local` file, then copy the `.env.sample` file contents over to `.env.local`. The `BASE_URL`s should point to the locally running instance of the app (which should be `localhost:3000`), and the `POSTGRES_PRISMA_URL` to your local instance of Postgres.
 3. Seed the database with some dummy data using `pnpm exec prisma db seed`.
 4. Run the app using `pnpm run dev`.
 5. Open up your browser at `localhost:3000` to view the app.

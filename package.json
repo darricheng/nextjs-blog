@@ -11,7 +11,7 @@
     "migrate:postgres": "dotenv -e .env.development.local -- pnpm exec prisma migrate deploy"
   },
   "prisma": {
-    "seed": "dotenv -e .env.development.local -- ts-node --compiler-options {\"module\":\"CommonJS\"} prisma/seed.ts"
+    "seed": "dotenv -e .env.local -- ts-node --compiler-options {\"module\":\"CommonJS\"} prisma/seed.ts"
   },
   "dependencies": {
     "@nextui-org/react": "^2.1.5",
