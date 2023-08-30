@@ -20,3 +20,9 @@ I use pnpm as my package manager, so [install it](https://pnpm.io/installation) 
 3. Run the command `pnpm run migrate:production` to set up your database with Prisma. Your database should be seeded with some dummy data.
 4. Set the following two environment variables (`VERCEL_URL` & `NEXT_PUBLIC_VERCEL_URL`) for your project to the deployed app domain (e.g. `nextjs-blog-yourusername.vercel-app`).
 5. Visit your website at the deployed app doamin!
+
+## Wireframes
+
+The simple wireframes below help better visualise how the key screens of the app might look like across the different screen sizes.
+
+![wireframes](./assets/wireframes.png)
