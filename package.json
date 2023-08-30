@@ -8,7 +8,9 @@
     "start": "next start",
     "lint": "next lint",
     "postinstall": "prisma generate",
-    "migrate:production": "dotenv -e .env.production.local -- pnpm exec prisma migrate deploy"
+    "migrate:production": "dotenv -e .env.production.local -- pnpm exec prisma migrate deploy",
+    "migrate:dev": "dotenv -e .env.local -- pnpm exec prisma migrate dev",
+    "db:push": "dotenv -e .env.local -- pnpm exec prisma db push"
   },
   "prisma": {
     "seed": "dotenv -e .env.local -- ts-node --compiler-options {\"module\":\"CommonJS\"} prisma/seed.ts"
