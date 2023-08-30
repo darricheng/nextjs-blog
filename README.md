@@ -2,13 +2,13 @@
 
 This is a sample blog project for me to explore and better understand some of the basic features of NextJS. It is meant to be a standalone app using only NextJS, with Postgres as the database.
 
-## Running the app locally
+## Developing locally
 
 I use pnpm as my package manager, so [install it](https://pnpm.io/installation) first if you don't have it.
 
 1. Install all the dependencies for the project using `pnpm install`.
-2. Create a `.env.local` file, then copy the `.env.sample` file contents over to `.env.local`. The `BASE_URL`s should point to the locally running instance of the app (which should be `localhost:3000`), and the `POSTGRES_PRISMA_URL` to your local instance of Postgres.
-3. With your database instance running, use [Prisma](https://www.prisma.io/docs/getting-started/setup-prisma/start-from-scratch/relational-databases/using-prisma-migrate-typescript-postgresql) to generate the tables in your database.
+2. Create a `.env.local` file, then copy the `.env.sample` file contents over to `.env.local`. The `BASE_URL`s should point to the locally running instance of the app (which should be `localhost:3000`), and the `POSTGRES_URL`s to your local instance of Postgres.
+3. Create the database with `pnpm run db:push`.
 4. Seed the database with some dummy data using `pnpm exec prisma db seed`.
 5. Run the app using `pnpm run dev`.
 6. Open up your browser at `localhost:3000` to view the app.
